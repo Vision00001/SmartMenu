@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART MENU</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EELB4NPHX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EELB4NPHX4');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:radial-gradient(circle at top,#020c1b,#000814);
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+transition:0.4s;
+}
+
+/* Glow Background */
+body::before{
+content:"";
+position:absolute;
+width:300px;
+height:300px;
+background:#FFD700;
+filter:blur(150px);
+opacity:0.2;
+animation:moveGlow 6s infinite alternate;
+}
+
+@keyframes moveGlow{
+0%{transform:translate(-50px,-50px);}
+100%{transform:translate(100px,100px);}
+}
+
+/* Sparkles */
+.sparkle{
+position:absolute;
+width:4px;
+height:4px;
+background:#FFD700;
+border-radius:50%;
+opacity:0.8;
+animation:sparkleAnim 2s infinite;
+}
+
+@keyframes sparkleAnim{
+0%{transform:scale(0);opacity:0;}
+50%{transform:scale(1.5);opacity:1;}
+100%{transform:scale(0);opacity:0;}
+}
+
+/* Container */
+.container{
+text-align:center;
+animation:fadeUp 1.5s ease;
+}
+
+/* Shimmer Title */
+h1{
+font-family:'Cinzel',serif;
+font-size:32px;
+letter-spacing:3px;
+
+background:linear-gradient(90deg,#FFD700,#ffffff,#FFD700);
+background-size:200% auto;
+color:transparent;
+-webkit-background-clip:text;
+background-clip:text;
+
+animation:shimmer 2.5s linear infinite;
+}
+
+@keyframes shimmer{
+0%{background-position:-200% center;}
+100%{background-position:200% center;}
+}
+
+/* Subtitle */
+p{
+color:#cbd5e1;
+margin:12px 0 30px;
+font-size:14px;
+opacity:0.8;
+}
+
+/* Button */
+button{
+background:linear-gradient(45deg,#FFD700,#ffcc00);
+color:black;
+border:none;
+padding:14px 35px;
+border-radius:14px;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+box-shadow:0 0 15px rgba(255,215,0,0.5);
+position:relative;
+overflow:hidden;
+transition:0.3s;
+}
+
+/* Shine */
+button::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+top:0;
+left:-100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
+transition:0.5s;
+}
+
+button:hover::before{
+left:100%;
+}
+
+button:hover{
+transform:scale(1.08);
+}
+
+button:active{
+transform:scale(0.95);
+}
+
+/* Entry Animation */
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🍽SMART MENU</h1>
+<p>Luxury Dining Experience</p>
+
+<button onclick="goMenu()">Explore Menu</button>
+</div>
+
+<!-- Sound -->
+<audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+
+<script>
+// 🔥 FIRST TIME ONLY CLEAR (CORRECT PLACE)
+if(!sessionStorage.getItem("visited")){
+  localStorage.removeItem("cart");
+  sessionStorage.setItem("visited", "true");
+}
+
+// Page transition + sound
+function goMenu(){
+document.getElementById("clickSound").play();
+document.body.style.opacity="0";
+
+setTimeout(()=>{
+window.location.href = "MenuT.html";
+},400);
+}
+
+// Sparkle Generator
+function createSparkle(){
+let sparkle = document.createElement("div");
+sparkle.classList.add("sparkle");
+
+sparkle.style.left = Math.random()*window.innerWidth + "px";
+sparkle.style.top = Math.random()*window.innerHeight + "px";
+
+document.body.appendChild(sparkle);
+
+setTimeout(()=>{
+sparkle.remove();
+},2000);
+}
+
+// Generate sparkles continuously
+setInterval(createSparkle,150);
+</script>
+
+</body>
+</html>

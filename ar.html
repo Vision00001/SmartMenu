@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury AR</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EELB4NPHX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EELB4NPHX4');
+</script>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+height:100vh;
+overflow:hidden;
+background:black;
+}
+
+/* CAMERA */
+video{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:1;
+}
+
+/* OVERLAY */
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.5));
+z-index:2;
+}
+
+/* HEADER */
+.header{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+padding:15px;
+z-index:5;
+backdrop-filter:blur(20px);
+background:rgba(0,0,0,0.25);
+}
+
+.title{
+color:gold;
+font-family:'Cinzel';
+font-size:18px;
+letter-spacing:2px;
+text-shadow:0 0 25px gold;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{text-shadow:0 0 10px gold;}
+to{text-shadow:0 0 35px gold;}
+}
+
+.back{
+border:1px solid gold;
+background:transparent;
+color:gold;
+padding:6px 12px;
+border-radius:10px;
+}
+
+/* MODEL */
+model-viewer{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0.2);
+width:100%;
+height:100%;
+z-index:4;
+opacity:0;
+animation:zoom 2s ease forwards, float 4s ease-in-out infinite;
+}
+
+@keyframes zoom{
+0%{transform:translate(-50%,-50%) scale(0.2);opacity:0;}
+60%{transform:translate(-50%,-50%) scale(1.08);opacity:1;}
+100%{transform:translate(-50%,-50%) scale(1);opacity:1;}
+}
+
+@keyframes float{
+0%{transform:translate(-50%,-50%) translateY(0);}
+50%{transform:translate(-50%,-50%) translateY(-10px);}
+100%{transform:translate(-50%,-50%) translateY(0);}
+}
+
+/* SHADOW */
+.shadow{
+position:fixed;
+bottom:15%;
+left:50%;
+transform:translateX(-50%);
+width:220px;
+height:60px;
+background:radial-gradient(circle, rgba(0,0,0,0.9), transparent);
+filter:blur(30px);
+z-index:2;
+transition:0.1s;
+}
+
+/* STEAM */
+.steam{
+position:fixed;
+bottom:20%;
+left:50%;
+transform:translateX(-50%);
+width:120px;
+height:120px;
+pointer-events:none;
+z-index:3;
+}
+
+.steam span{
+position:absolute;
+width:15px;
+height:60px;
+background:rgba(255,255,255,0.15);
+border-radius:50%;
+filter:blur(8px);
+animation:steamUp 2s infinite ease-in;
+}
+
+.steam span:nth-child(2){left:30px;animation-delay:0.5s;}
+.steam span:nth-child(3){left:60px;animation-delay:1s;}
+
+@keyframes steamUp{
+0%{transform:translateY(0) scale(1);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-100px) scale(1.5);opacity:0;}
+}
+
+/* NOTE */
+.note{
+position:fixed;
+bottom:20px;
+width:100%;
+text-align:center;
+color:white;
+z-index:5;
+font-size:13px;
+letter-spacing:1px;
+opacity:0.9;
+}
+</style>
+</head>
+
+<body>
+
+<video id="cam" autoplay playsinline></video>
+<div class="overlay"></div>
+
+<div class="header">
+<button class="back" onclick="history.back()">⬅</button>
+<div class="title" id="titleText">LOADING...</div>
+</div>
+
+<div class="shadow" id="shadow"></div>
+
+<div class="steam" id="steam">
+<span></span><span></span><span></span>
+</div>
+
+<model-viewer 
+id="model"
+src=""
+camera-controls
+auto-rotate
+shadow-intensity="2.2"
+exposure="1.8"
+interaction-prompt="none">
+</model-viewer>
+
+<div class="note">Tap to place • Drag to move • Pinch to zoom</div>
+
+<script>
+
+// CAMERA AUTO
+navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}})
+.then(stream=>cam.srcObject=stream)
+.catch(()=>alert("Camera allow karo bro"));
+
+// GET DATA
+const params = new URLSearchParams(window.location.search);
+let name = params.get("name");
+
+// MODEL SELECT
+let modelFile = "cake.glb";
+
+if(name){
+let n = name.toLowerCase();
+
+if(n.includes("apple")) modelFile = "apple_cake.glb";
+else if(n.includes("desi thali")) modelFile = "desi_thali.glb";
+else if(n.includes("momos")) modelFile = "steamed_Momos.glb";
+else if(n.includes("chocolate")) modelFile = "chocolate.glb";
+else if(n.includes("red velvet")) modelFile = "redvelvet.glb";
+else if(n.includes("black forest")) modelFile = "black_forest_cake.glb";
+else if(n.includes("Fruit Ice Cream")) modelFile = "fruit_ice.glb";
+}
+
+// APPLY MODEL
+document.getElementById("model").src = modelFile;
+
+// TITLE
+document.getElementById("titleText").innerText = name ? name.toUpperCase() : "PRODUCT";
+
+// ELEMENTS
+let model = document.getElementById("model");
+let shadow = document.getElementById("shadow");
+
+let placed = false;
+
+// TAP = PLACE OBJECT
+document.addEventListener("click",(e)=>{
+
+let x = (e.clientX / window.innerWidth)*100;
+let y = (e.clientY / window.innerHeight)*100;
+
+model.style.left = x + "%";
+model.style.top = y + "%";
+
+shadow.style.left = x + "%";
+shadow.style.top = (y + 6) + "%";
+
+// ANIMATION
+model.style.transform = "translate(-50%,-50%) scale(0.7)";
+setTimeout(()=>{
+model.style.transform = "translate(-50%,-50%) scale(1)";
+},150);
+
+placed = true;
+});
+
+// DRAG AFTER PLACE
+document.addEventListener("touchmove",(e)=>{
+
+if(!placed) return;
+
+let t = e.touches[0];
+
+let x = (t.clientX / window.innerWidth)*100;
+let y = (t.clientY / window.innerHeight)*100;
+
+model.style.left = x + "%";
+model.style.top = y + "%";
+
+shadow.style.left = x + "%";
+shadow.style.top = (y + 6) + "%";
+
+// DYNAMIC SHADOW
+let size = 150 + (y*0.6);
+shadow.style.width = size + "px";
+
+},{passive:true});
+
+// STEAM ONLY FOR MOMOS
+if(name && name.toLowerCase().includes("momos")){
+document.getElementById("steam").style.display="block";
+}else{
+document.getElementById("steam").style.display="none";
+}
+
+</script>
+
+</body>
+</html>

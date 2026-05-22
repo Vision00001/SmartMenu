@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury Order</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EELB4NPHX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EELB4NPHX4');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins, sans-serif;
+}
+
+html,body{
+height:100%;
+width:100%;
+}
+
+body{
+background:linear-gradient(135deg,#020617,#0f172a);
+color:white;
+display:flex;
+flex-direction:column;
+}
+
+/* MAIN */
+.main{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+/* CARD */
+.card{
+width:100%;
+max-width:400px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+border-radius:20px;
+padding:20px;
+box-shadow:0 0 30px rgba(255,215,0,0.2);
+animation:fadeIn 0.6s ease;
+}
+
+h2{
+text-align:center;
+color:gold;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:14px;
+margin:10px 0;
+border:none;
+border-radius:12px;
+background:rgba(255,255,255,0.08);
+color:white;
+outline:none;
+}
+
+input:focus{
+box-shadow:0 0 8px gold;
+transform:scale(1.02);
+}
+
+/* BUTTON */
+.sticky-btn{
+position:fixed;
+bottom:70px;
+left:0;
+width:100%;
+padding:15px;
+background:linear-gradient(45deg,gold,orange);
+border:none;
+font-weight:bold;
+cursor:pointer;
+font-size:16px;
+}
+
+/* AD */
+.ad-space{
+height:60px;
+background:#111;
+color:#777;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(15px);}
+to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>4
+
+<div class="main">
+<div class="card">
+
+<h2>🛍 Luxury Order</h2>
+
+<input type="text" id="name" placeholder="Customer Name" required>
+<input type="text" id="address" placeholder="Address" required>
+
+<input type="tel" id="mobile" placeholder="Mobile No"
+maxlength="10" inputmode="numeric" required>
+
+<input type="text" id="landmark" placeholder="Landmark">
+
+</div>
+</div>
+
+<button class="sticky-btn" onclick="sendMail()">
+✨ Place Order
+</button>
+
+<div class="ad-space">
+Ad Space (Google Ads / Banner Here)
+</div>
+
+<script>
+(function(){
+emailjs.init("SD5QAw0WnnLsdGOip");
+})();
+
+function sendMail(){
+
+let mobile = document.getElementById("mobile").value;
+
+if(!/^[0-9]{10}$/.test(mobile)){
+alert("❌ Enter valid 10 digit number");
+return;
+}
+
+// cart
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let orderText = "";
+let totalPrice = 0;
+
+cart.forEach(item=>{
+let itemTotal = item.price * item.qty;
+totalPrice += itemTotal;
+orderText += item.name + " x " + item.qty + " = ₹" + itemTotal + "\\n";
+});
+
+let now = new Date();
+
+let params = {
+name: document.getElementById("name").value,
+address: document.getElementById("address").value,
+mobile: mobile,
+landmark: document.getElementById("landmark").value,
+order: orderText,
+total: totalPrice,
+order_id: Math.floor(Math.random()*10000),
+date: now.toLocaleDateString(),
+time: now.toLocaleTimeString()
+};
+
+// 📲 WhatsApp (100% working)
+let phone = "916200990192";
+
+let message = `🍴 New Order 🍴
+
+Name: ${params.name}
+Mobile: ${params.mobile}
+Address: ${params.address}
+Landmark: ${params.landmark}
+
+Order:
+${orderText}
+
+Total: ₹ ${totalPrice}
+
+Order ID: ${params.order_id}
+`;
+
+let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+
+// 🔥 DIRECT REDIRECT (NO BLOCK)
+window.location.href = url;
+
+// 📧 EMAIL BACKGROUND
+setTimeout(()=>{
+emailjs.send("anandYadav", "template_1oda9xh", params)
+.then(()=>{
+localStorage.removeItem("cart");
+});
+}, 1000);
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MAKE YOUR SMART MENU</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EELB4NPHX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EELB4NPHX4');
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+background:linear-gradient(135deg,#020617,#0f172a);
+color:white;
+padding:15px;
+}
+
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.title{
+font-family:'Cinzel',serif;
+font-size:26px;
+color:gold;
+text-shadow:0 0 20px gold;
+}
+
+/* CART */
+.cart-btn{
+background:gold;
+border:none;
+padding:10px 14px;
+border-radius:12px;
+font-size:18px;
+cursor:pointer;
+box-shadow:0 0 15px gold;
+}
+
+/* SEARCH */
+.search-box{
+display:flex;
+gap:10px;
+margin:15px 0;
+}
+
+.search-box input{
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+background:rgba(255,255,255,0.08);
+color:white;
+}
+
+.mic{
+background:gold;
+border:none;
+padding:12px;
+border-radius:12px;
+cursor:pointer;
+}
+
+/* CATEGORIES */
+.categories{
+display:flex;
+gap:10px;
+overflow-x:auto;
+margin-bottom:15px;
+}
+
+.cat{
+padding:10px 14px;
+background:rgba(255,255,255,0.08);
+border-radius:12px;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.cat.active{
+background:gold;
+color:black;
+}
+
+/* GRID LIKE BLINKIT */
+#menu{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.06);
+border-radius:18px;
+padding:10px;
+transition:0.3s;
+backdrop-filter:blur(10px);
+animation:fadeUp 0.5s forwards;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+height:110px;
+border-radius:12px;
+object-fit:cover;
+}
+
+.card h3{
+font-size:14px;
+margin-top:6px;
+}
+
+.price{
+color:gold;
+font-size:13px;
+margin:4px 0;
+}
+
+/* BUTTON */
+button{
+background:gold;
+border:none;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+font-size:12px;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="title">Smart Menu</div>
+  <button class="cart-btn" onclick="goCart()">🛒</button>
+</div>
+
+<div class="search-box">
+<input type="text" id="search" placeholder="Search food...">
+<button class="mic" onclick="startVoice()">🎤</button>
+</div>
+
+<div class="categories">
+<div class="cat active" onclick="setCategory('all',this)">All</div>
+<div class="cat" onclick="setCategory('cake',this)">Cakes</div>
+<div class="cat" onclick="setCategory('pastry',this)">Pastry</div>
+<div class="cat" onclick="setCategory('drink',this)">Drinks</div>
+<div class="cat" onclick="setCategory('dessert',this)">Dessert</div>
+<div class="cat" onclick="setCategory('snack',this)">Snacks</div>
+</div>
+
+<div id="menu">
+
+<!-- SAME PRODUCTS -->
+
+<div class="card" data-cat="cake">
+<img src="https://images.unsplash.com/photo-1605478901317-3e2c8a4f39c6">
+<h3>Chocolate Cake</h3>
+<div class="price">₹500</div>
+<button onclick="viewProduct('Chocolate Cake','500','Chocolate, Cream, Sugar','https://images.unsplash.com/photo-1605478901317-3e2c8a4f39c6')">View</button>
+</div>
+
+<div class="card" data-cat="cake">
+<img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587">
+<h3>Red Velvet Cake</h3>
+<div class="price">₹600</div>
+<button onclick="viewProduct('Red Velvet Cake','600','Cocoa, Cream Cheese, Sugar','https://images.unsplash.com/photo-1578985545062-69928b1d9587')">View</button>
+</div>
+
+<div class="card" data-cat="cake">
+<img src="https://images.unsplash.com/photo-1559622214-5c1b1a5d9d1c">
+<h3>Black Forest Cake</h3>
+<div class="price">₹550</div>
+<button onclick="viewProduct('Black Forest Cake','550','Chocolate, Cherry, Cream','https://images.unsplash.com/photo-1559622214-5c1b1a5d9d1c')">View</button>
+</div>
+
+<div class="card" data-cat="cake">
+<img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c">
+<h3>Apple Cake</h3>
+<div class="price">₹450</div>
+<button onclick="viewProduct('Apple Cake','450','Apple, Flour, Sugar, Butter','https://images.unsplash.com/photo-1606313564200-e75d5e30476c')">View</button>
+</div>
+
+<!-- DESI THALI -->
+<div class="card" data-cat="dessert">
+<img src="DesiThali.jpg">
+<h3>Desi Thali</h3>
+<div class="price">₹250</div>
+<button onclick="viewProduct('Desi Thali','250','Chapati, Sabji, Dal, Rice, Salad','DesiThali.jpg')">View</button>
+</div>
+
+<!-- 🔥 NEW STEAM MOMOS -->
+<div class="card" data-cat="snack">
+<img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d">
+<h3>Steam Momos</h3>
+<div class="price">₹120</div>
+<button onclick="viewProduct('Steam Momos','120','Momos, Veg Filling, Sauce','https://images.unsplash.com/photo-1604908176997-125f25cc6f3d')">View</button>
+</div>
+
+<div class="card" data-cat="pastry">
+<img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729">
+<h3>Strawberry Pastry</h3>
+<div class="price">₹120</div>
+<button onclick="viewProduct('Strawberry Pastry','120','Strawberry, Cream, Sugar','https://images.unsplash.com/photo-1621303837174-89787a7d4729')">View</button>
+</div>
+
+<div class="card" data-cat="pastry">
+<img src="https://images.unsplash.com/photo-1589308078054-8327f8ec0b7b">
+<h3>Chocolate Pastry</h3>
+<div class="price">₹110</div>
+<button onclick="viewProduct('Chocolate Pastry','110','Chocolate, Cream','https://images.unsplash.com/photo-1589308078054-8327f8ec0b7b')">View</button>
+</div>
+
+<div class="card" data-cat="drink">
+<img src="https://images.unsplash.com/photo-1544148103-0773bf10d330">
+<h3>Cold Coffee</h3>
+<div class="price">₹150</div>
+<button onclick="viewProduct('Cold Coffee','150','Coffee, Milk, Ice','https://images.unsplash.com/photo-1544148103-0773bf10d330')">View</button>
+</div>
+
+<div class="card" data-cat="drink">
+<img src="https://images.unsplash.com/photo-1497534446932-c925b458314e">
+<h3>Mango Shake</h3>
+<div class="price">₹140</div>
+<button onclick="viewProduct('Mango Shake','140','Mango, Milk, Sugar','https://images.unsplash.com/photo-1497534446932-c925b458314e')">View</button>
+</div>
+
+<div class="card" data-cat="drink">
+<img src="https://images.unsplash.com/photo-1527169402691-a4b0f9c7a7b8">
+<h3>Oreo Shake</h3>
+<div class="price">₹160</div>
+<button onclick="viewProduct('Oreo Shake','160','Oreo, Milk, Chocolate','https://images.unsplash.com/photo-1527169402691-a4b0f9c7a7b8')">View</button>
+</div>
+
+<div class="card" data-cat="dessert">
+<img src="https://images.unsplash.com/photo-1551024506-0bccd828d307">
+<h3>Chocolate Brownie</h3>
+<div class="price">₹180</div>
+<button onclick="viewProduct('Chocolate Brownie','180','Chocolate, Butter, Sugar','https://images.unsplash.com/photo-1551024506-0bccd828d307')">View</button>
+</div>
+
+<div class="card" data-cat="dessert">
+<img src="https://images.unsplash.com/photo-1505253716362-afaea6c48b8b">
+<h3>Fruit Ice Cream</h3>
+<div class="price">₹90</div>
+<button onclick="viewProduct('Fruit Ice Cream','90','Milk, Sugar, Flavour','https://images.unsplash.com/photo-1505253716362-afaea6c48b8b')">View</button>
+</div>
+
+</div>
+
+<script>
+function goCart(){
+window.location.href="cart.html";
+}
+
+function viewProduct(name,price,ingredients,img){
+const url=`View.html?name=${encodeURIComponent(name)}&price=${price}&ingredients=${ingredients}&img=${img}`;
+window.location.href=url;
+}
+
+let currentCategory="all";
+
+document.getElementById("search").addEventListener("input",filter);
+
+function setCategory(cat,btn){
+currentCategory=cat;
+document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
+btn.classList.add('active');
+filter();
+}
+
+function filter(){
+let value=document.getElementById("search").value.toLowerCase();
+
+document.querySelectorAll(".card").forEach(card=>{
+let text=card.innerText.toLowerCase();
+let matchText=text.includes(value);
+let matchCat=currentCategory==="all"||card.dataset.cat===currentCategory;
+
+card.style.display=(matchText&&matchCat)?"block":"none";
+});
+}
+
+function startVoice(){
+let recognition=new(window.SpeechRecognition||window.webkitSpeechRecognition)();
+recognition.lang="en-IN";
+
+recognition.onresult=function(e){
+document.getElementById("search").value=e.results[0][0].transcript;
+filter();
+}
+recognition.start();
+}
+</script>
+
+</body>
+</html>
